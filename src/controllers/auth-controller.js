@@ -1,5 +1,9 @@
 exports.register = (req, res, next) => {
-    res.json({message: "Register"});
+    const { email, password } = req.body;
+
+    // Logic
+
+    res.json({ email, password });
 };
 
 exports.login = (req, res, next) => {
@@ -7,6 +11,8 @@ exports.login = (req, res, next) => {
 };
 
 exports.forgetPassword = (req, res, next) => {
+    const { email } = req.body;
+    // get token -> สร้าง Link -> ส่ง email
     res.json({message: "Forget Password"});
 };
 
