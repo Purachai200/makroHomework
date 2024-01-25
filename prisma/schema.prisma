@@ -20,6 +20,13 @@ enum RefundType {
   BANK
 }
 
+enum StatusShipping {
+  SHIPPED
+  DELIVERED
+  CANCELED
+  PENDING
+}
+
 model User {
   id                Int                @id @default(autoincrement())
   role              Role               @default(USER)
@@ -124,7 +131,7 @@ model Product {
   Product_Promotion Product_Promotion[]
 }
 
-// Product immage for hw 240124
+// Product image for hw 240124
 model Product_Img {
   id        Int     @id @default(autoincrement())
   url       String
@@ -183,7 +190,7 @@ model Order_Product {
 
 model Status {
   id        Int      @id @default(autoincrement())
-  status    String
+  status    StatusShipping @default(PENDING)
   createdAt DateTime @default(now())
   order     Order    @relation(fields: [orderId], references: [id])
   orderId   Int      @map("order_id")
