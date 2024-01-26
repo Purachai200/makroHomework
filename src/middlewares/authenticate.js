@@ -5,15 +5,18 @@ const userService = require("../services/user-service");
 
 const authenticate = async (req, res, next) => {
   try {
-    const { autorization } = req.header;
-    if (!autorization) {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
       return createError(401, "Unauthorized");
     }
 
-    const arrayToken = autorization.splite(" ");
+    const arrayToken = authorization.split(" ");
+
     const token = arrayToken[1];
 
-    if (autorization[0] !== "Bearer" || !token) {
+    if (arrayToken[0] !== "Bearer" || !token) {
+      console.log(arrayToken[0], token);
       return createError(401, "Unauthorized");
     }
 
@@ -22,9 +25,9 @@ const authenticate = async (req, res, next) => {
     if (
       typeof payload !== "object" ||
       !payload?.id ||
-      typeof payload.id !== "string"
+      typeof payload.id !== "number"
     ) {
-      return createError(400, "Payload not in corect format");
+      return createError(400, "Payload not in correct format");
     }
 
     const user = await userService.getUserById(payload.id);
